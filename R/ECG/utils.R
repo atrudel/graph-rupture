@@ -1,3 +1,14 @@
+library(data.table)
+
+# This function takes in the following arguments:
+# - fitted_model: the output of the gfpop() funciton
+# - signal: in the form of a dataframe with two named columns:
+#   - 'timesteps': (int) indices of the timesteps
+#   - 'values': (float) the values of the time series
+# - sampling frequency of the signal in Hz (int)
+# - x_label: the label to attach to the graph's x axis
+# - y_label: the label to attach to the graph's y axis
+
 plot_qrs_modelled_signal <- function(
   fitted_model,
   signal,
