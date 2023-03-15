@@ -30,7 +30,7 @@ You can also visualize the plot in the file
 We can now display the signal in R.  
 **Todo:**
 - [x] Extract one signal of the dataset and display it
-- [ ] Reproduce the constraint graph and adapt deltas
+- [x] Reproduce the constraint graph and adapt deltas
 - [ ] Run the analysis on many time series
 - [ ] Evaluate qualitatively a few examples
 
