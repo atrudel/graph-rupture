@@ -37,6 +37,6 @@ gg <- plot_qrs_modelled_signal(
 )
 
 show(gg)
-pdf("ECG/figures/gfpop_ECG.pdf")
-print(gg)
-dev.off()
+# pdf("ECG/figures/gfpop_ECG.pdf")
+# print(gg)
+# dev.off()

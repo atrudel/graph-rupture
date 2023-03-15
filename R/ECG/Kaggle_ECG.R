@@ -49,10 +49,11 @@ gg <- plot_qrs_modelled_signal(
   x_label = "Time (seconds)",
   y_label = "Electrocardiogram"
 )
+
 show(gg)
 
 # Save figure
-# pdf("R/ECG/figures/Kaggle_ECG.pdf")
+# pdf("ECG/figures/Kaggle_ECG.pdf")
 # print(gg)
 # dev.off()
 
