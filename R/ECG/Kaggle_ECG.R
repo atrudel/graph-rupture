@@ -3,11 +3,11 @@ library(farff)
 library(tidyverse)
 library(ggplot2)
 library(reshape2)
-source("./ECG/utils.R")
+source("R/ECG/utils.R")
 
 
 # 4045 signals of 188
-heartbeats <- read_csv("../data/ECG_kaggle/ptbdb_normal.csv", col_names = FALSE)
+heartbeats <- read_csv("data/ECG_kaggle/ptbdb_normal.csv", col_names = FALSE)
 sampling_frequency <- 125
 
 # Function that extracts a signal from the heartbeat dataset
@@ -53,7 +53,7 @@ gg <- plot_qrs_modelled_signal(
 show(gg)
 
 # Save figure
-# pdf("ECG/figures/Kaggle_ECG.pdf")
+# pdf("R/ECG/figures/Kaggle_ECG.pdf")
 # print(gg)
 # dev.off()
 
