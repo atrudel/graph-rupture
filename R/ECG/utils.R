@@ -14,7 +14,8 @@ plot_qrs_modelled_signal <- function(
   signal,
   sampling_frequency,
   x_label,
-  y_label
+  y_label,
+  state_codes
 ){
   ## Build a table that describes segments
   ##
@@ -30,7 +31,7 @@ plot_qrs_modelled_signal <- function(
   ))
 
   # Assign a letter to each state in a separate column
-  segments.dt[, letter := c("beforeQ", "Q", "R", "S", "S1", "S2", "peak", "afterPeak", "foo")[state+1] ]
+  segments.dt[, letter := state_codes[state+1] ]
 
   # Create a new table with two rwos per segment. For a given segment:
   # The "time" column has the beginning of the segment -0,5 on the first row

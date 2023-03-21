@@ -20,6 +20,7 @@ heartbeatGraph <- gfpop::graph(
   gfpop::Edge(8, 0, type = "up", penalty =0, gap=0),
   all.null.edges = TRUE
 )
+state_codes <- c("beforeQ", "Q", "R", "S", "S1", "S2", "peak", "afterPeak", "foo")
 
 signal <- ECG$data
 colnames(signal) <- c("timesteps", "values")
@@ -33,7 +34,8 @@ gg <- plot_qrs_modelled_signal(
   signal = signal,
   sampling_frequency = 250,
   x_label = "Time (seconds)",
-  y_label = "Electrocardiogram activity (mV)"
+  y_label = "Electrocardiogram activity (mV)",
+  state_codes = state_codes
 )
 
 show(gg)

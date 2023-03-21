@@ -39,6 +39,8 @@ qrs_graph <- gfpop::graph(
   gfpop::Edge(8, 0, type = "up", penalty =0, gap=0),
   all.null.edges = TRUE
 )
+state_codes <- c("beforeQ", "Q", "R", "S", "S1", "S2", "peak", "afterPeak", "foo")
+
 fitted_model <- gfpop(data=signal$values, mygraph = qrs_graph, type="mean")
 
 # Plot the signal
@@ -47,7 +49,8 @@ gg <- plot_qrs_modelled_signal(
   signal = signal,
   sampling_frequency = sampling_frequency,
   x_label = "Time (seconds)",
-  y_label = "Electrocardiogram"
+  y_label = "Electrocardiogram",
+  state_codes = state_codes
 )
 
 show(gg)
