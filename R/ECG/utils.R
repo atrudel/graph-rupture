@@ -15,7 +15,8 @@ plot_qrs_modelled_signal <- function(
   sampling_frequency,
   x_label,
   y_label,
-  state_codes
+  state_codes,
+  title
 ){
   ## Build a table that describes segments
   ##
@@ -24,14 +25,14 @@ plot_qrs_modelled_signal <- function(
 
   # Create initial table with 4 columns
   segments.dt <- with(signal, data.table(
-    timeStart=timesteps[start.i],
-    timeEnd=timesteps[end.i],
-    state=as.numeric(fitted_model$states),
-    mean=fitted_model$parameters
+    timeStart = timesteps[start.i],
+    timeEnd = timesteps[end.i],
+    state = as.numeric(fitted_model$states),
+    mean = fitted_model$parameters
   ))
 
   # Assign a letter to each state in a separate column
-  segments.dt[, letter := state_codes[state+1] ]
+  segments.dt[, letter := state_codes[state + 1]]
 
   # Create a new table with two rwos per segment. For a given segment:
   # The "time" column has the beginning of the segment -0,5 on the first row
@@ -43,8 +44,8 @@ plot_qrs_modelled_signal <- function(
   )]
 
   model.dt <- segments.dt[, data.table(
-      timesteps=ifelse(letter=='Q', timeEnd, (timeStart+timeEnd)/2),
-      values=mean,
+      timesteps = ifelse(letter == 'Q', timeEnd, (timeStart+timeEnd)/2),
+      values = mean,
       letter
     )]
 
@@ -73,5 +74,43 @@ plot_qrs_modelled_signal <- function(
       alpha=0.6,
       data=model.dt)+
     xlab(x_label)+
-    ylab(y_label)
+    ylab(y_label)+
+    ggtitle(title)
+}
+
+scoring_state_ruptures <- function(
+  signal,
+  fitted_model,
+  ground_truth,
+  state_name,
+  state_codes
+){
+  ## Build a table that describes segments
+  ##
+  end.i <- fitted_model$changepoints
+  start.i <- c(1, end.i[-length(end.i)]+1)
+
+  # Create initial table with 4 columns
+  segments.dt <- with(signal, data.table(
+    timeStart = timesteps[start.i],
+    timeEnd = timesteps[end.i],
+    state = as.numeric(fitted_model$states),
+    mean = fitted_model$parameters
+  ))
+
+  # Assign a letter to each state in a separate column
+  segments.dt[, letter := state_codes[state + 1]]
+
+  found.dt <- segments.dt |> subset(letter == state_name)
+  true_positiv <- 0
+  
+  for (time_truth in ground_truth) {
+    if (nrow(found.dt |> subset(timeStart <= time_truth & time_truth <= timeEnd)) != 0){
+      true_positiv <- true_positiv + 1
+    }
+  }
+  false_pos <- nrow(found.dt) - true_positiv
+  false_neg <- length(ground_truth) - true_positiv
+  f1_score <- 2* true_positiv/(2*true_positiv + false_neg + false_pos)
+  paste("F1 Score obtained : ", f1_score)
 }
