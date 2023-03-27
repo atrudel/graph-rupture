@@ -12,10 +12,10 @@ temperature_data <- read_csv("data/Sensors_Intel/signal_with_faults.csv", col_na
 signal <- temperature_data[c("timesteps", "temperature")]
 
 
-up_penalty <- 1e4
-short_penalty <- 1e4
+up_penalty <- 1e2
+short_penalty <- 1e2
 # constant_penalty <- 1e5
-short_gap <- 5
+short_gap <- 8
 
 
 short_graph <- gfpop::graph(
@@ -52,9 +52,9 @@ gg <- plot_fault_modelled_signal(
 )
 
 show(gg)
-# pdf("R/Sensors_Intel/figures/sensor_faults.pdf")
-# print(gg)
-# dev.off()
+pdf("R/Sensors/figures/sensor_short_faults.pdf")
+print(gg)
+dev.off()
 
 #################################################################################################################
 # Second graph

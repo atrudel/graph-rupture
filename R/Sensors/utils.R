@@ -26,7 +26,6 @@ plot_fault_modelled_signal <- function(
     mean = fitted_model$parameters
   ))
 
-
   # Create a new table with two rwos per segment. For a given segment:
   # The "time" column has the beginning of the segment -0,5 on the first row
   # The "time" column gas the end of the segment + 0.5 on the first row
@@ -41,6 +40,8 @@ plot_fault_modelled_signal <- function(
       values = mean,
       state
     )]
+
+  model.dt <- model.dt[model.dt$state == "SHORT"]
 
   # Plot
   #------------------------------------------------------------------------------------------------
