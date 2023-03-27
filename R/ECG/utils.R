@@ -112,5 +112,19 @@ scoring_state_ruptures <- function(
   false_pos <- nrow(found.dt) - true_positiv
   false_neg <- length(ground_truth) - true_positiv
   f1_score <- 2* true_positiv/(2*true_positiv + false_neg + false_pos)
-  paste("F1 Score obtained : ", f1_score)
+  f1_score
+}
+
+plot_curve_log <- function(
+  dataframe
+){
+  ggplot()+
+    theme_bw()+
+    theme(panel.spacing=grid::unit(0, "lines"))+
+
+    geom_line(aes(
+      penality, f1_constraint),
+      color="blue",
+      data=dataframe)+
+    scale_x_log10()
 }
